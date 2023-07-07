@@ -11,20 +11,17 @@ public class CycleFreezer : MonoBehaviour
 
     private Controls _controls;
 
-    private void Awake()
+    private void OnEnable()
     {
         _controls = new Controls();
 
         _controls.Player.Freeze.performed += Freeze;
-    }
-
-    private void OnEnable()
-    {
         _controls.Player.Enable();
     }
 
     private void OnDisable()
     {
+        _controls.Player.Freeze.performed -= Freeze;
         _controls.Player.Disable();
     }
 
