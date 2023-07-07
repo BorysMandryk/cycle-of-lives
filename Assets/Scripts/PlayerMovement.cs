@@ -22,24 +22,28 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
-        
-        _controls = new Controls();
-
-
-        _controls.Player.Move.performed += MoveReadValue;
-        _controls.Player.Move.canceled += MoveReadValue;
-        //_controls.Player.Move.canceled += StopMove;
-        _controls.Player.Jump.performed += Jump;
     }
 
     private void OnEnable()
     {
+        _controls = new Controls();
+
+        _controls.Player.Move.performed += MoveReadValue;
+        _controls.Player.Move.canceled += MoveReadValue;
+
+        _controls.Player.Jump.performed += Jump;
+
         _controls.Player.Enable();
     }
 
     private void OnDisable()
     {
-        _controls.Player.Enable();
+        _controls.Player.Move.performed -= MoveReadValue;
+        _controls.Player.Move.canceled -= MoveReadValue;
+
+        _controls.Player.Jump.performed -= Jump;
+
+        _controls.Player.Disable();
     }
 
     private void FixedUpdate()
