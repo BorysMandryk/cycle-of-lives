@@ -13,62 +13,39 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
-    private Controls _controls;
 
-    private float _moveValue;
-
+    private PlayerInput _playerInput;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
-    }
-
-    private void OnEnable()
-    {
-        _controls = new Controls();
-
-        _controls.Player.Move.performed += MoveReadValue;
-        _controls.Player.Move.canceled += MoveReadValue;
-
-        _controls.Player.Jump.performed += Jump;
-
-        _controls.Player.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _controls.Player.Move.performed -= MoveReadValue;
-        _controls.Player.Move.canceled -= MoveReadValue;
-
-        _controls.Player.Jump.performed -= Jump;
-
-        _controls.Player.Disable();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()
     {
         Move();
+
+        if (IsGrounded() && _playerInput.JumpPressed)
+        {
+            Jump();
+        }
     }
 
     private void Move()
     {
-        Vector2 moveVelocity = new Vector2(_speed * _moveValue, _rigidbody.velocity.y);
+        Vector2 moveVelocity = new Vector2(_speed * _playerInput.MoveValue, _rigidbody.velocity.y);
         _rigidbody.velocity = moveVelocity;
     }
 
-    private void MoveReadValue(InputAction.CallbackContext context)
+    private void Jump()
     {
-        _moveValue = context.ReadValue<float>();
-    }
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
 
-    private void Jump(InputAction.CallbackContext context)
-    {
-        if (IsGrounded())
-        {
-            Vector2 jumpVec = Vector2.up * _jumpForce;
-            _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
-        }
+        Vector2 jumpVec = Vector2.up * _jumpForce;
+        _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+        
     }
 
     private bool IsGrounded()

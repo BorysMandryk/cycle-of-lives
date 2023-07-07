@@ -9,24 +9,23 @@ public class CycleFreezer : MonoBehaviour
     [SerializeField] private GameObject _freezedPrefab;
     [SerializeField] private UnityEvent _onFreeze;
 
-    private Controls _controls;
+    private PlayerInput _playerInput;
 
-    private void OnEnable()
+    private void Awake()
     {
-        _controls = new Controls();
-
-        _controls.Player.Freeze.performed += Freeze;
-        _controls.Player.Enable();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        _controls.Player.Freeze.performed -= Freeze;
-        _controls.Player.Disable();
+        if (_playerInput.FreezePressed)
+        {
+            Freeze();
+        }
     }
 
     // “ут маЇтьс€ на уваз≥, що все це знаходитьс€ на об'Їкт≥ гравц€
-    private void Freeze(InputAction.CallbackContext context)
+    private void Freeze()
     {
         _onFreeze?.Invoke();
 
