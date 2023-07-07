@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &4667273260488447684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,3 +165,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _freezedPrefab: {fileID: 4667273260488447711, guid: 57289d792c9866e44a1919edbbf12d25, type: 3}
+  _onFreeze:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6135153386201455089, guid: 86e08190d961750479276a9b665c6620, type: 3}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SpawnPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
