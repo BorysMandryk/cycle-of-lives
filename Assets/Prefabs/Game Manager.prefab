@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 4667273260488447711, guid: 05fd73d2909b2f74897d3fca4b4a6765, type: 3}
+  _maxFreezeNum: 3

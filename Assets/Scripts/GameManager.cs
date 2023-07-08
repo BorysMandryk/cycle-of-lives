@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     private Vector2 _spawnPos;
 
     public Grid Grid { get; private set; }
+    public FreezeTracker FreezeTracker { get; private set; }
 
     public static GameManager Instance { get; private set; }
 
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         Grid = (Grid)FindObjectOfType(typeof(Grid));
+        FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
     }
 
     public void SpawnPlayer()

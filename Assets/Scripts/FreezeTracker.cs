@@ -1,29 +1,26 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class FreezeTracker
+public class FreezeTracker : MonoBehaviour
 {
+    [SerializeField] private int _maxFreezeNum;
     private Queue<GameObject> _freezes = new Queue<GameObject>();
-    private int _maxFreezeNum;
 
     public int Count => _freezes.Count;
 
-    public FreezeTracker(int maxFreezeNum)
-    {
-        _maxFreezeNum = maxFreezeNum;
-    }
-
     public void AddFreeze(GameObject gameObject)
     {
+        _freezes.Enqueue(gameObject);
         if (Count > _maxFreezeNum)
         {
             DequeueFreeze();
         }
-        _freezes.Enqueue(gameObject);
     }
 
-    public GameObject DequeueFreeze()
+    public void DequeueFreeze()
     {
-        return _freezes.Dequeue();
+        GameObject go = _freezes.Dequeue();
+        Debug.Log($"Destroy {go}");
+        Destroy(go);
     }
 }
