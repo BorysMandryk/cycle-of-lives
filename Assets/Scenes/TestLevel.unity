@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 393627416}
   - component: {fileID: 393627415}
   - component: {fileID: 393627414}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ PlatformEffector2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RotationalOffset: 0
-  m_UseOneWay: 1
+  m_UseOneWay: 0
   m_UseOneWayGrouping: 0
   m_SurfaceArc: 180
   m_UseSideFriction: 0
@@ -4152,5 +4152,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7400709018973442533, guid: 05fd73d2909b2f74897d3fca4b4a6765, type: 3}
+      propertyPath: _grid
+      value: 
+      objectReference: {fileID: 1842594333}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05fd73d2909b2f74897d3fca4b4a6765, type: 3}

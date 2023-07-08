@@ -113,7 +113,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!50 &4667273260488447680
 Rigidbody2D:
@@ -152,7 +152,7 @@ MonoBehaviour:
   _jumpForce: 5
   _jumpableLayer:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 64
 --- !u!114 &7400709018973442533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +181,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _grid: {fileID: 0}
 --- !u!114 &-7254964674379660263
 MonoBehaviour:
   m_ObjectHideFlags: 0

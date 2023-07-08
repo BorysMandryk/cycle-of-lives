@@ -45,11 +45,12 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 jumpVec = Vector2.up * _jumpForce;
         _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
-        
     }
 
     private bool IsGrounded()
     {
-        return Physics2D.BoxCast(_collider.bounds.center, _collider.bounds.size, 0f, Vector2.down, 0.1f, _jumpableLayer);
+        RaycastHit2D hitInfo = Physics2D.BoxCast(_collider.bounds.center, _collider.bounds.size, 0f, Vector2.down, 0.1f, _jumpableLayer);
+
+        return hitInfo.normal == Vector2.up;
     }
 }
