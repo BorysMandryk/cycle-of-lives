@@ -31,10 +31,10 @@ public class CycleFreezer : MonoBehaviour
     {
         _onFreeze?.Invoke();
 
-        
         Vector2 freezePos = SnapToGrid(transform.position);
+        GameObject instance = Instantiate(_freezedPrefab, freezePos, Quaternion.identity);
 
-        Instantiate(_freezedPrefab, freezePos, Quaternion.identity);
+        GameManager.Instance.FreezeTracker.AddFreeze(instance);
 
         Destroy(gameObject);
     }
