@@ -9,7 +9,7 @@ public class CycleFreezer : MonoBehaviour
     [SerializeField] private GameObject _freezedPrefab;
     [SerializeField] private UnityEvent _onFreeze;
 
-    [SerializeField] private Grid _grid;
+    //[SerializeField] private Grid _grid;
 
     private PlayerInput _playerInput;
 
@@ -41,7 +41,7 @@ public class CycleFreezer : MonoBehaviour
 
     private Vector2 SnapToGrid(Vector2 position)
     {
-        Vector3Int cellPos = _grid.WorldToCell(position);
-        return _grid.GetCellCenterWorld(cellPos);
+        Vector3Int cellPos = GameManager.Instance.Grid.WorldToCell(position);
+        return GameManager.Instance.Grid.GetCellCenterWorld(cellPos);
     }
 }

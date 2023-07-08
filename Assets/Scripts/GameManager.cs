@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _playerPrefab;
     private Vector2 _spawnPos;
 
+    public Grid Grid { get; private set; }
+
     public static GameManager Instance { get; private set; }
 
     private void Awake()
@@ -18,6 +20,8 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+
+        Grid = (Grid)FindObjectOfType(typeof(Grid));
     }
 
     public void SpawnPlayer()

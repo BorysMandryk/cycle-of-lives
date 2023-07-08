@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &4667273260488447684
 MonoBehaviour:
@@ -181,7 +181,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _grid: {fileID: 0}
 --- !u!114 &-7254964674379660263
 MonoBehaviour:
   m_ObjectHideFlags: 0
