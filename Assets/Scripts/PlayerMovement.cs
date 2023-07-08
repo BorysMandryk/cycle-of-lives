@@ -49,8 +49,15 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D hitInfo = Physics2D.BoxCast(_collider.bounds.center, _collider.bounds.size, 0f, Vector2.down, 0.1f, _jumpableLayer);
+        RaycastHit2D hitInfo = Physics2D.BoxCast(_collider.bounds.center, _collider.bounds.size * 0.85f, 0f, Vector2.down, 0.1f, _jumpableLayer);
 
-        return hitInfo.normal == Vector2.up;
+        if (hitInfo.normal.sqrMagnitude < Mathf.Epsilon)
+        {
+            return false;
+        }
+        
+        float vecAngle = Vector2.Angle(hitInfo.normal, Vector2.up);
+
+        return vecAngle < 1;
     }
 }
