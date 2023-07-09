@@ -20,7 +20,6 @@ public class FreezeTracker : MonoBehaviour
     public void DequeueFreeze()
     {
         GameObject go = _freezes.Dequeue();
-        Debug.Log($"Destroy {go}");
         Destroy(go);
     }
 }

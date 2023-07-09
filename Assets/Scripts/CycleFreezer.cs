@@ -6,8 +6,9 @@ using UnityEngine.InputSystem;
 
 public class CycleFreezer : MonoBehaviour
 {
-    [SerializeField] private GameObject _freezedPrefab;
-    [SerializeField] private UnityEvent _onFreeze;
+    //[SerializeField] private GameObject _freezedPrefab;
+    [SerializeField] private FreezeType _freezedType;
+    //[SerializeField] private UnityEvent _onFreeze;
 
     private PlayerInput _playerInput;
 
@@ -27,20 +28,13 @@ public class CycleFreezer : MonoBehaviour
     // “ут маЇтьс€ на уваз≥, що все це знаходитьс€ на об'Їкт≥ гравц€
     private void Freeze()
     {
-        _onFreeze?.Invoke();
-        
-        Vector2 freezePos = SnapToGrid(transform.position);
-        GameObject instance = Instantiate(_freezedPrefab, freezePos, Quaternion.identity);
+        Vector2 freezePos = Utils.SnapToGrid(GameManager.Instance.Grid, transform.position);
+        GameObject instance = Instantiate(_freezedType.gameObject, freezePos, Quaternion.identity);
+        instance.GetComponent<FreezeType>().Freeze();
 
         GameManager.Instance.FreezeTracker.AddFreeze(instance);
 
+        GameManager.Instance.SpawnPlayer();
         Destroy(gameObject);
-    }
-
-    private Vector2 SnapToGrid(Vector2 position)
-    {
-        Debug.Log(position);
-        Vector3Int cellPos = GameManager.Instance.Grid.WorldToCell(position);
-        return GameManager.Instance.Grid.GetCellCenterWorld(cellPos);
     }
 }

@@ -6,7 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
-    private Vector2 _spawnPos;
+    [SerializeField] private Transform _defaultSpawnPoint;
+    private Transform _checkpoint;
 
     public Grid Grid { get; private set; }
     public FreezeTracker FreezeTracker { get; private set; }
@@ -29,6 +30,12 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Instantiate(_playerPrefab, _spawnPos, Quaternion.identity);
+        Transform spawnPoint = _checkpoint ?? _defaultSpawnPoint;
+        Instantiate(_playerPrefab, spawnPoint.position, Quaternion.identity);
+    }
+
+    public void SetCheckpoint(Transform newCheckpoint)
+    {
+        _checkpoint = newCheckpoint;
     }
 }
