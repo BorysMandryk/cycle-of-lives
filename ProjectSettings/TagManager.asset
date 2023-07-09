@@ -11,6 +11,7 @@ TagManager:
   - 
   - Water
   - UI
+  - PostProcessing
   - Jumpable
   - 
   - 
@@ -46,4 +47,10 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 1975920325
+    locked: 0
+  - name: Thorns
+    uniqueID: 4006472195
+    locked: 0
+  - name: Decor
+    uniqueID: 1332697837
     locked: 0
