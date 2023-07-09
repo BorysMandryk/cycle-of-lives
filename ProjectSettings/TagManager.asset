@@ -37,7 +37,6 @@ TagManager:
   - 
   - 
   - 
-  - 
   m_SortingLayers:
   - name: Background
     uniqueID: 3683218877
@@ -53,4 +52,10 @@ TagManager:
     locked: 0
   - name: Decor
     uniqueID: 1332697837
+    locked: 0
+  - name: Freeze
+    uniqueID: 28192055
+    locked: 0
+  - name: Player
+    uniqueID: 2903179325
     locked: 0

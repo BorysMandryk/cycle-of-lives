@@ -6,19 +6,33 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class StartGame : MonoBehaviour
 {
-    public GameObject Camera;
+    public InputReader InputReader;
+
     public GameObject Menu;
 
     public bool isOpened = true;
 
-    public InputAction pause;
-
     public PostProcessProfile profile_on_menu;
     public PostProcessProfile profile_on_game;
 
+    private Camera _camera;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+        InputReader.PauseMenuEvent += OnOpenButtonClick;
+        InputReader.ReturnEvent += OnCloseButtonClick;
+    }
+
+    //private void OnDisable()
+    //{
+    //    InputReader.PauseMenuEvent -= OnOpenButtonClick;
+    //    InputReader.ReturnEvent -= OnCloseButtonClick;
+    //}
+
     private void ExecuteTrigger(GameObject target, string trigger)
     {
-        if(Camera != null)
+        if(target != null)
         {
             var animator = target.GetComponent<Animator>();
             if(animator != null )
@@ -28,40 +42,18 @@ public class StartGame : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (isOpened)
-        {
-            if (Input.GetKeyUp(KeyCode.Escape))
-            {
-                OnCloseButtonClick();
-            }
-
-            isOpened = false;
-        }
-        else
-        {
-            if (Input.GetKeyUp(KeyCode.Escape))
-            {
-                OnOpenButtonClick();
-            }
-
-            isOpened = true;
-        }
-
-    }
     public void OnOpenButtonClick()
     {
-        ExecuteTrigger(Camera, "ShowMenu");
+        ExecuteTrigger(_camera.gameObject, "ShowMenu");
         ExecuteTrigger(Menu, "ShowMenu");
-        Camera.GetComponent<PostProcessVolume>().profile = profile_on_menu;
+        _camera.GetComponent<PostProcessVolume>().profile = profile_on_menu;
     }
 
     public void OnCloseButtonClick()
     {
-        ExecuteTrigger(Camera, "HideMenu");
+        ExecuteTrigger(_camera.gameObject, "HideMenu");
         ExecuteTrigger(Menu, "HideMenu");
-        Camera.GetComponent<PostProcessVolume>().profile = profile_on_game;
+        _camera.GetComponent<PostProcessVolume>().profile = profile_on_game;
     }
 
 }
