@@ -6,41 +6,34 @@ using UnityEngine.InputSystem;
 
 public class CycleFreezer : MonoBehaviour
 {
-    [SerializeField] private GameObject _freezedPrefab;
-    [SerializeField] private UnityEvent _onFreeze;
-
-    private PlayerInput _playerInput;
+    [SerializeField] private InputReader _inputReader;
+    
+    private FreezeTypeSelector _freezeTypeSelector;
+    //[SerializeField] private FreezeType _freezedType;
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        _freezeTypeSelector = FindObjectOfType<FreezeTypeSelector>();
+        _inputReader.FreezeEvent += Freeze;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (_playerInput.FreezePressed)
-        {
-            Freeze();
-        }
+        _inputReader.FreezeEvent -= Freeze;
     }
 
     // “ут маЇтьс€ на уваз≥, що все це знаходитьс€ на об'Їкт≥ гравц€
     private void Freeze()
     {
-        _onFreeze?.Invoke();
-        
-        Vector2 freezePos = SnapToGrid(transform.position);
-        GameObject instance = Instantiate(_freezedPrefab, freezePos, Quaternion.identity);
+        Vector2 freezePos = Utils.SnapToGrid(GameManager.Instance.Grid, transform.position);
+
+        GameObject _freezeGO = _freezeTypeSelector.CurrentFreezeType.gameObject;
+        GameObject instance = Instantiate(_freezeGO, freezePos, Quaternion.identity);
+        instance.GetComponent<FreezeType>().Freeze();
 
         GameManager.Instance.FreezeTracker.AddFreeze(instance);
 
+        GameManager.Instance.SpawnPlayer();
         Destroy(gameObject);
-    }
-
-    private Vector2 SnapToGrid(Vector2 position)
-    {
-        Debug.Log(position);
-        Vector3Int cellPos = GameManager.Instance.Grid.WorldToCell(position);
-        return GameManager.Instance.Grid.GetCellCenterWorld(cellPos);
     }
 }
