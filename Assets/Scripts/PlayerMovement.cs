@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,39 +8,31 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private InputReader _inputReader;
+
+    [Header("Movement Config")]
     [SerializeField] private float _speed = 10f;
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private LayerMask _jumpableLayer;
 
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
-    private Controls _controls;
 
-    private float _moveValue;
-
+    private float _moveDir;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
-        
-        _controls = new Controls();
 
-
-        _controls.Player.Move.performed += MoveReadValue;
-        _controls.Player.Move.canceled += MoveReadValue;
-        //_controls.Player.Move.canceled += StopMove;
-        _controls.Player.Jump.performed += Jump;
-    }
-
-    private void OnEnable()
-    {
-        _controls.Player.Enable();
+        _inputReader.MoveEvent += HandleMove;
+        _inputReader.JumpEvent += Jump;
     }
 
     private void OnDisable()
     {
-        _controls.Player.Enable();
+        _inputReader.MoveEvent -= HandleMove;
+        _inputReader.JumpEvent -= Jump;
     }
 
     private void FixedUpdate()
@@ -47,21 +40,23 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
+    private void HandleMove(float moveDir)
+    {
+        _moveDir = moveDir;
+    }
+
     private void Move()
     {
-        Vector2 moveVelocity = new Vector2(_speed * _moveValue, _rigidbody.velocity.y);
+        Vector2 moveVelocity = new Vector2(_speed * _moveDir, _rigidbody.velocity.y);
         _rigidbody.velocity = moveVelocity;
     }
 
-    private void MoveReadValue(InputAction.CallbackContext context)
-    {
-        _moveValue = context.ReadValue<float>();
-    }
-
-    private void Jump(InputAction.CallbackContext context)
+    private void Jump()
     {
         if (IsGrounded())
         {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+
             Vector2 jumpVec = Vector2.up * _jumpForce;
             _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
         }
@@ -69,6 +64,15 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics2D.BoxCast(_collider.bounds.center, _collider.bounds.size, 0f, Vector2.down, 0.1f, _jumpableLayer);
+        RaycastHit2D hitInfo = Physics2D.BoxCast(_collider.bounds.center, _collider.bounds.size * 0.85f, 0f, Vector2.down, 0.1f, _jumpableLayer);
+
+        if (hitInfo.normal.sqrMagnitude < Mathf.Epsilon)
+        {
+            return false;
+        }
+        
+        float vecAngle = Vector2.Angle(hitInfo.normal, Vector2.up);
+
+        return vecAngle < 1;
     }
 }
