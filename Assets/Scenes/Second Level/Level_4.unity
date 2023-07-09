@@ -351,7 +351,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -181.09998, y: 25.486282}
-  m_SizeDelta: {x: 89, y: 30}
+  m_SizeDelta: {x: 130.4186, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &295713378
 MonoBehaviour:
@@ -455,7 +455,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295713376}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e5ad08d6bf3c5ec4dbf73865e99dff44, type: 2}
   m_CullingMode: 0
@@ -2169,15 +2169,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Exit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 35a473c2797033d45975b57a849359c8, type: 2}
-  m_sharedMaterial: {fileID: -9153563699727761512, guid: 35a473c2797033d45975b57a849359c8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45eaaaeaa228f2e4cb93674635e1af6f, type: 2}
+  m_sharedMaterial: {fileID: -1171080487894368483, guid: 45eaaaeaa228f2e4cb93674635e1af6f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283580740
-  m_fontColor: {r: 0.26666668, g: 0.25490198, b: 0.32156864, a: 1}
+    rgba: 4286478314
+  m_fontColor: {r: 0.9176471, g: 0.4666667, b: 0.49411768, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2525,7 +2525,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095859200}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e5ad08d6bf3c5ec4dbf73865e99dff44, type: 2}
   m_CullingMode: 0
@@ -3015,15 +3015,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 35a473c2797033d45975b57a849359c8, type: 2}
-  m_sharedMaterial: {fileID: -9153563699727761512, guid: 35a473c2797033d45975b57a849359c8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45eaaaeaa228f2e4cb93674635e1af6f, type: 2}
+  m_sharedMaterial: {fileID: -1171080487894368483, guid: 45eaaaeaa228f2e4cb93674635e1af6f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283580740
-  m_fontColor: {r: 0.26666668, g: 0.25490198, b: 0.32156864, a: 1}
+    rgba: 4286478314
+  m_fontColor: {r: 0.9176471, g: 0.4666667, b: 0.49411768, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
