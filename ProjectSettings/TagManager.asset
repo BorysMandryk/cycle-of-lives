@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - PostProcessing
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 1975920325
+    locked: 0
+  - name: Thorns
+    uniqueID: 4006472195
     locked: 0
