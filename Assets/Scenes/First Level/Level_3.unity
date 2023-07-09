@@ -200,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195669882979404890, guid: 41fb35b4ccf72fa4ab554de9fb380e70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.24
+      value: 11.35
       objectReference: {fileID: 0}
     - target: {fileID: 195669882979404890, guid: 41fb35b4ccf72fa4ab554de9fb380e70, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2108,6 +2108,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2899859391500883162, guid: 86e08190d961750479276a9b665c6620, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4118984572549956328, guid: 86e08190d961750479276a9b665c6620, type: 3}
       propertyPath: m_Name
       value: Game Manager
@@ -2118,7 +2122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4438695258958426989, guid: 86e08190d961750479276a9b665c6620, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4438695258958426989, guid: 86e08190d961750479276a9b665c6620, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6068,11 +6072,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 195669882979404890, guid: 41fb35b4ccf72fa4ab554de9fb380e70, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 195669882979404890, guid: 41fb35b4ccf72fa4ab554de9fb380e70, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.22
+      value: -8.35
       objectReference: {fileID: 0}
     - target: {fileID: 195669882979404890, guid: 41fb35b4ccf72fa4ab554de9fb380e70, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6129,7 +6133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4485798891976446998, guid: d51e2ac7a20f6024f98323c5b59fdcc2, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4485798891976446998, guid: d51e2ac7a20f6024f98323c5b59fdcc2, type: 3}
       propertyPath: m_LocalPosition.x
