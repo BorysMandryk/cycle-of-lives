@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _playerPrefab;
     private Vector2 _spawnPos;
 
+    public InputManager InputManager { get; private set; }
     public Grid Grid { get; private set; }
     public FreezeTracker FreezeTracker { get; private set; }
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
 
+        InputManager = (InputManager)FindObjectOfType(typeof(InputManager));
         Grid = (Grid)FindObjectOfType(typeof(Grid));
         FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
     }
