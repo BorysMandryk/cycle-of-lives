@@ -56,12 +56,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""ChangeFreezeType"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""47223624-2923-449b-ab99-c8021fe57e50"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""PauseMenu"",

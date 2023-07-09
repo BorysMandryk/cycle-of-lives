@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerInput : MonoBehaviour
     public bool JumpPressed { get; private set; }
     public bool FreezePressed { get; private set; }
     public bool PausePressed { get; private set; }
+
+    [SerializeField] private UnityEvent<int> _onFreezeTypeChanged;
 
     private Controls _controls;
 
@@ -29,6 +32,8 @@ public class PlayerInput : MonoBehaviour
         _controls.Player.PauseMenu.performed += SetPause;
         _controls.Player.PauseMenu.canceled += SetPause;
 
+        _controls.Player.ChangeFreezeType.performed += ChangeFreezeType;
+
         _controls.Player.Enable();
     }
 
@@ -45,6 +50,8 @@ public class PlayerInput : MonoBehaviour
 
         _controls.Player.PauseMenu.performed -= SetPause;
         _controls.Player.PauseMenu.canceled -= SetPause;
+
+        _controls.Player.ChangeFreezeType.performed -= ChangeFreezeType;
 
         _controls.Player.Disable();
     }
@@ -67,5 +74,11 @@ public class PlayerInput : MonoBehaviour
     private void SetPause(InputAction.CallbackContext context)
     {
         PausePressed = context.ReadValueAsButton();
+    }
+
+    private void ChangeFreezeType(InputAction.CallbackContext context)
+    {
+        int val = context.ReadValue<int>();
+        _onFreezeTypeChanged?.Invoke(val);
     }
 }

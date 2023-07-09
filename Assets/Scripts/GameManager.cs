@@ -30,7 +30,16 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Transform spawnPoint = _checkpoint ?? _defaultSpawnPoint;
+        Transform spawnPoint;
+        if (_checkpoint != null)
+        {
+            spawnPoint = _checkpoint;
+        }
+        else
+        {
+            spawnPoint = _defaultSpawnPoint;
+        }
+        //Transform spawnPoint = _checkpoint ?? _defaultSpawnPoint;
         Instantiate(_playerPrefab, spawnPoint.position, Quaternion.identity);
     }
 

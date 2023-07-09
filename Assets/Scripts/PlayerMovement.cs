@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private InputReader _inputReader;
 
     [Header("Movement Config")]
     [SerializeField] private float _speed = 10f;
@@ -17,37 +18,48 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
 
-    private PlayerInput _playerInput;
+    private float _moveDir;
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+
+        _inputReader.MoveEvent += HandleMove;
+        _inputReader.JumpEvent += Jump;
+    }
+
+    private void OnDisable()
+    {
+        _inputReader.MoveEvent -= HandleMove;
+        _inputReader.JumpEvent -= Jump;
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
 
-        if (IsGrounded() && _playerInput.JumpPressed)
-        {
-            Jump();
-        }
+    private void HandleMove(float moveDir)
+    {
+        _moveDir = moveDir;
     }
 
     private void Move()
     {
-        Vector2 moveVelocity = new Vector2(_speed * _playerInput.MoveValue, _rigidbody.velocity.y);
+        Vector2 moveVelocity = new Vector2(_speed * _moveDir, _rigidbody.velocity.y);
         _rigidbody.velocity = moveVelocity;
     }
 
     private void Jump()
     {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+        if (IsGrounded())
+        {
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
 
-        Vector2 jumpVec = Vector2.up * _jumpForce;
-        _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+            Vector2 jumpVec = Vector2.up * _jumpForce;
+            _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+        }
     }
 
     private bool IsGrounded()

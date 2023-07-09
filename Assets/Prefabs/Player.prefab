@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4667273260488447680}
   - component: {fileID: 4667273260488447684}
   - component: {fileID: 7400709018973442533}
-  - component: {fileID: -2520450887340108188}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -148,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ae90f58a72f044b9958312aee55431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: e6c6ec668c47cfd47995d48ef9f2fe1e, type: 2}
   _speed: 10
   _jumpForce: 5
   _jumpableLayer:
@@ -165,16 +165,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc55445db209ca947916090b2b723b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _freezedType: {fileID: 5965038093790426394, guid: 1460afd0d5c535c4f8ce8dbdee5eb932, type: 3}
---- !u!114 &-2520450887340108188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4667273260488447711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10104dff4c37aa14eb85d086be45b3c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: e6c6ec668c47cfd47995d48ef9f2fe1e, type: 2}
+  _freezeTypeSelector: {fileID: 5243907207681694890, guid: 7471528ddcae7684d83f2a918e5f12e5, type: 3}
