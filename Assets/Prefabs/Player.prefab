@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4667273260488447680}
   - component: {fileID: 4667273260488447684}
   - component: {fileID: 7400709018973442533}
-  - component: {fileID: -7254964674379660263}
+  - component: {fileID: -2520450887340108188}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,7 +181,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &-7254964674379660263
+--- !u!114 &-2520450887340108188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

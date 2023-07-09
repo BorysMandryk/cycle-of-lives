@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("Movement Config")]
     [SerializeField] private float _speed = 10f;
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private LayerMask _jumpableLayer;
@@ -18,9 +21,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        _playerInput = GetComponent<PlayerInput>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
-        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()

@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     public float MoveValue { get; private set; }
     public bool JumpPressed { get; private set; }
     public bool FreezePressed { get; private set; }
+    public bool PausePressed { get; private set; }
 
     private Controls _controls;
 
@@ -25,6 +26,9 @@ public class PlayerInput : MonoBehaviour
         _controls.Player.Freeze.performed += SetFreeze;
         _controls.Player.Freeze.canceled += SetFreeze;
 
+        _controls.Player.PauseMenu.performed += SetPause;
+        _controls.Player.PauseMenu.canceled += SetPause;
+
         _controls.Player.Enable();
     }
 
@@ -38,6 +42,9 @@ public class PlayerInput : MonoBehaviour
 
         _controls.Player.Freeze.performed += SetFreeze;
         _controls.Player.Freeze.canceled += SetFreeze;
+
+        _controls.Player.PauseMenu.performed -= SetPause;
+        _controls.Player.PauseMenu.canceled -= SetPause;
 
         _controls.Player.Disable();
     }
@@ -55,5 +62,10 @@ public class PlayerInput : MonoBehaviour
     private void SetFreeze(InputAction.CallbackContext context)
     {
         FreezePressed = context.ReadValueAsButton();
+    }
+
+    private void SetPause(InputAction.CallbackContext context)
+    {
+        PausePressed = context.ReadValueAsButton();
     }
 }
