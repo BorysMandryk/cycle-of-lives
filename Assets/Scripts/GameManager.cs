@@ -26,9 +26,6 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        Grid = (Grid)FindObjectOfType(typeof(Grid));
-        FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
     }
 
     private void OnEnable()
@@ -73,7 +70,11 @@ public class GameManager : MonoBehaviour
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        Grid = (Grid)FindObjectOfType(typeof(Grid));
+        FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
+
         _transition.SetTrigger("EndFade");
+        SpawnPlayer();
     }
 
     private IEnumerator LoadLevel(int LevelIndex)

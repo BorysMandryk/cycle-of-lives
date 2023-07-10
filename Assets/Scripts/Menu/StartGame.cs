@@ -19,16 +19,17 @@ public class StartGame : MonoBehaviour
 
     private void Awake()
     {
+        Menu.SetActive(isOpened);
         _camera = Camera.main;
         InputReader.PauseMenuEvent += OnOpenButtonClick;
         InputReader.ReturnEvent += OnCloseButtonClick;
     }
 
-    //private void OnDisable()
-    //{
-    //    InputReader.PauseMenuEvent -= OnOpenButtonClick;
-    //    InputReader.ReturnEvent -= OnCloseButtonClick;
-    //}
+    private void OnDisable()
+    {
+        InputReader.PauseMenuEvent -= OnOpenButtonClick;
+        InputReader.ReturnEvent -= OnCloseButtonClick;
+    }
 
     private void ExecuteTrigger(GameObject target, string trigger)
     {
