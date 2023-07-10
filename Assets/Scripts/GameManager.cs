@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
-    [SerializeField] private Transform _defaultSpawnPoint;
+    [SerializeField] private Vector2 _defaultSpawnPos;
     [SerializeField] private Animator _transition;
     private Transform _checkpoint;
 
@@ -25,24 +25,35 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         Grid = (Grid)FindObjectOfType(typeof(Grid));
         FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
     public void SpawnPlayer()
     {
-        Transform spawnPoint;
+        Vector2 spawnPos;
         if (_checkpoint != null)
         {
-            spawnPoint = _checkpoint;
+            spawnPos = _checkpoint.position;
         }
         else
         {
-            spawnPoint = _defaultSpawnPoint;
+            spawnPos = _defaultSpawnPos;
         }
 
-        Instantiate(_playerPrefab, spawnPoint.position, Quaternion.identity);
+        Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
     }
 
     public void SetCheckpoint(Transform newCheckpoint)
@@ -50,9 +61,19 @@ public class GameManager : MonoBehaviour
         _checkpoint = newCheckpoint;
     }
 
+    public void SetDefaultSpawnPosition(Vector2 newPosition)
+    {
+        _defaultSpawnPos = newPosition;
+    }
+
     public void LoadNextLevel(int index)
     {
         StartCoroutine(LoadLevel(index));
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        _transition.SetTrigger("EndFade");
     }
 
     private IEnumerator LoadLevel(int LevelIndex)
