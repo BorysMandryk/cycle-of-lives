@@ -28,16 +28,17 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions, Controls.I
         _controls.Player.SetCallbacks(this);
         _controls.UI.SetCallbacks(this);
 
-        SetPlayerMap();
+        //SetPlayerMap();
+        SetUIMap();
     }
 
-    private void SetPlayerMap()
+    public void SetPlayerMap()
     {
         _controls.Player.Enable();
         _controls.UI.Disable();
     }
 
-    private void SetUIMap()
+    public void SetUIMap()
     {
         _controls.Player.Disable();
         _controls.UI.Enable();
