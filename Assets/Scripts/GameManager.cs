@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Vector2 _defaultSpawnPos;
     [SerializeField] private Animator _transition;
+    [SerializeField] private GameObject _canvas;
     private Transform _checkpoint;
+
+    public bool GameStarted { get; set; } = false;
 
     public Grid Grid { get; private set; }
     public FreezeTracker FreezeTracker { get; private set; }
@@ -20,12 +23,13 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        _canvas.SetActive(false);
     }
 
     private void OnEnable()
@@ -73,16 +77,29 @@ public class GameManager : MonoBehaviour
         Grid = (Grid)FindObjectOfType(typeof(Grid));
         FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
 
-        _transition.SetTrigger("EndFade");
         SpawnPlayer();
+        _canvas.SetActive(false);
+        StartCoroutine(FinishedLoadLevel());
+        Debug.Log(GameStarted);
     }
 
     private IEnumerator LoadLevel(int LevelIndex)
     {
+        _canvas.SetActive(true);
         _transition.SetTrigger("StartFade");
 
         yield return new WaitForSeconds(1);
-
+        _canvas.SetActive(false);
         SceneManager.LoadScene(LevelIndex);
+    }
+
+    private IEnumerator FinishedLoadLevel()
+    {
+        _canvas.SetActive(true);
+        _transition.SetTrigger("EndFade");
+
+        yield return new WaitForSeconds(1);
+
+        _canvas.SetActive(false);
     }
 }

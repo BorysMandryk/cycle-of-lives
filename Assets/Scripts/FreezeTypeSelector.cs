@@ -6,6 +6,7 @@ public class FreezeTypeSelector : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private List<FreezeType> _freezeTypes = new List<FreezeType>();
+    [SerializeField] private List<GameObject> _freezeTypesUI = new List<GameObject>();
     
     private int _currentIndex;
 
@@ -14,6 +15,7 @@ public class FreezeTypeSelector : MonoBehaviour
     private void Awake()
     {
         _inputReader.ChangeFreezeTypeEvent += ChangeType;
+        ChangeTypeUI();
     }
 
     private void OnDisable()
@@ -32,6 +34,23 @@ public class FreezeTypeSelector : MonoBehaviour
         {
             _currentIndex = _freezeTypes.Count - 1;
         }
+
+        ChangeTypeUI();
         Debug.Log(CurrentFreezeType);
+    }
+
+    private void ChangeTypeUI()
+    {
+        for (int i = 0; i < _freezeTypesUI.Count; i++)
+        {
+            if (_currentIndex == i)
+            {
+                _freezeTypesUI[i].SetActive(true);
+            }
+            else
+            {
+                _freezeTypesUI[i].SetActive(false);
+            }
+        }
     }
 }

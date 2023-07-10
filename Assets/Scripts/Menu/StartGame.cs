@@ -17,12 +17,20 @@ public class StartGame : MonoBehaviour
 
     private Camera _camera;
 
-    private void Awake()
+    private void Start()
     {
-        Menu.SetActive(isOpened);
         _camera = Camera.main;
-        InputReader.PauseMenuEvent += OnOpenButtonClick;
-        InputReader.ReturnEvent += OnCloseButtonClick;
+
+        //Menu.SetActive(isOpened);
+        if (GameManager.Instance.GameStarted)
+        {
+            OnCloseButtonClick();
+            InputReader.SetPlayerMap();
+
+            InputReader.PauseMenuEvent += OnOpenButtonClick;
+            InputReader.ReturnEvent += OnCloseButtonClick;
+        }
+
     }
 
     private void OnDisable()
@@ -45,6 +53,7 @@ public class StartGame : MonoBehaviour
 
     public void OnOpenButtonClick()
     {
+        isOpened = true;        
         ExecuteTrigger(_camera.gameObject, "ShowMenu");
         ExecuteTrigger(Menu, "ShowMenu");
         _camera.GetComponent<PostProcessVolume>().profile = profile_on_menu;
@@ -52,9 +61,29 @@ public class StartGame : MonoBehaviour
 
     public void OnCloseButtonClick()
     {
+        isOpened = false;
         ExecuteTrigger(_camera.gameObject, "HideMenu");
         ExecuteTrigger(Menu, "HideMenu");
         _camera.GetComponent<PostProcessVolume>().profile = profile_on_game;
     }
 
+    public void StartGameHandler()
+    {
+        if(!GameManager.Instance.GameStarted)
+        {
+            InputReader.PauseMenuEvent += OnOpenButtonClick;
+            InputReader.ReturnEvent += OnCloseButtonClick;
+        }
+
+        GameManager.Instance.GameStarted = true;
+        OnCloseButtonClick();
+
+        InputReader.SetPlayerMap();
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Exit");
+        Application.Quit();
+    }
 }

@@ -36,12 +36,16 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions, Controls.I
     {
         _controls.Player.Enable();
         _controls.UI.Disable();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void SetUIMap()
     {
         _controls.Player.Disable();
         _controls.UI.Enable();
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void OnMove(InputAction.CallbackContext context)

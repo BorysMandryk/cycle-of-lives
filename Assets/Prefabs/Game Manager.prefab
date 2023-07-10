@@ -257,5 +257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 4667273260488447711, guid: 05fd73d2909b2f74897d3fca4b4a6765, type: 3}
-  _defaultSpawnPoint: {fileID: 0}
+  _defaultSpawnPos: {x: 0, y: 0}
   _transition: {fileID: 8032015047622621185}
+  _canvas: {fileID: 2899859391500883162}
