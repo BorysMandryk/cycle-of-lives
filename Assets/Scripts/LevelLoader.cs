@@ -5,13 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    [SerializeField] private int _nextLevelIndex;
     [SerializeField] private string _nextSceneName;
     [SerializeField] private string _exitName;
-    [SerializeField] private Transform _nextLevelSpawnPoint;
+
+    private bool _triggered;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_triggered)
+        {
+            return;
+        }
+
+        _triggered = true;
+
         // Варіант 1
         PlayerPrefs.SetString("LastExitName", _exitName);
 
