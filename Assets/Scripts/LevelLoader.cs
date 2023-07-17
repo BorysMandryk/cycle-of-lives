@@ -5,12 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    [SerializeField] private int _nextLevelIndex;
-    [SerializeField] private Transform _nextLevelSpawnPoint;
+    [SerializeField] private string _nextSceneName;
+    [SerializeField] private string _exitName;
+
+    private bool _triggered;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManager.Instance.SetDefaultSpawnPosition(_nextLevelSpawnPoint.position);
-        GameManager.Instance.LoadNextLevel(_nextLevelIndex);
+        if (_triggered)
+        {
+            return;
+        }
+
+        _triggered = true;
+
+        // Варіант 1
+        PlayerPrefs.SetString("LastExitName", _exitName);
+
+        // Варіант 2
+        //GameManager.Instance.LastExitName = _exitName;
+
+        //GameManager.Instance.LoadNextLevel(_nextLevelIndex);
+        GameManager.Instance.LoadNextLevel(_nextSceneName);
     }
 }

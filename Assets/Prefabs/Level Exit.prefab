@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 195669882979404893}
   - component: {fileID: 4337753166907794746}
   m_Layer: 0
-  m_Name: LevelLoader
+  m_Name: Level Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nextLevelIndex: 0
+  _nextSceneName: 
+  _exitName: 
+  _nextLevelSpawnPoint: {fileID: 0}
 --- !u!68 &4337753166907794746
 EdgeCollider2D:
   m_ObjectHideFlags: 0
