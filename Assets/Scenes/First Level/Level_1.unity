@@ -5647,6 +5647,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4710711556983909681, guid: 86e08190d961750479276a9b665c6620, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710711556983909681, guid: 86e08190d961750479276a9b665c6620, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6135153386201455089, guid: 86e08190d961750479276a9b665c6620, type: 3}
       propertyPath: _defaultSpawnPos.x
       value: -5.5

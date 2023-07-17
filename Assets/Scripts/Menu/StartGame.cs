@@ -24,8 +24,9 @@ public class StartGame : MonoBehaviour
         //Menu.SetActive(isOpened);
         if (GameManager.Instance.GameStarted)
         {
-            OnCloseButtonClick();
-            InputReader.SetPlayerMap();
+            DisableMenu();
+            //OnCloseButtonClick();
+            //InputReader.SetPlayerMap();
 
             InputReader.PauseMenuEvent += OnOpenButtonClick;
             InputReader.ReturnEvent += OnCloseButtonClick;
@@ -67,6 +68,13 @@ public class StartGame : MonoBehaviour
         _camera.GetComponent<PostProcessVolume>().profile = profile_on_game;
     }
 
+    public void DisableMenu()
+    {
+        ExecuteTrigger(_camera.gameObject, "DisableMenu");
+        ExecuteTrigger(Menu, "DisableMenu");
+        _camera.GetComponent<PostProcessVolume>().profile = profile_on_game;
+    }
+
     public void StartGameHandler()
     {
         if(!GameManager.Instance.GameStarted)
@@ -79,6 +87,13 @@ public class StartGame : MonoBehaviour
         OnCloseButtonClick();
 
         InputReader.SetPlayerMap();
+    }
+
+    public void PauseGame()
+    {
+        OnOpenButtonClick();
+
+        InputReader.SetUIMap();
     }
 
     public void Exit()
