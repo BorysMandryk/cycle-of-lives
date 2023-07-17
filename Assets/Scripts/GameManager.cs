@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        SpawnPlayer();
         _canvas.SetActive(false);
     }
 
@@ -67,9 +69,9 @@ public class GameManager : MonoBehaviour
         _defaultSpawnPos = newPosition;
     }
 
-    public void LoadNextLevel(int index)
+    public void LoadNextLevel(string levelName)
     {
-        StartCoroutine(LoadLevel(index));
+        StartCoroutine(LoadLevel(levelName));
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
@@ -77,20 +79,19 @@ public class GameManager : MonoBehaviour
         Grid = (Grid)FindObjectOfType(typeof(Grid));
         FreezeTracker = (FreezeTracker)FindObjectOfType(typeof(FreezeTracker));
 
-        SpawnPlayer();
         _canvas.SetActive(false);
         StartCoroutine(FinishedLoadLevel());
         Debug.Log(GameStarted);
     }
 
-    private IEnumerator LoadLevel(int LevelIndex)
+    private IEnumerator LoadLevel(string levelName)
     {
         _canvas.SetActive(true);
         _transition.SetTrigger("StartFade");
 
         yield return new WaitForSeconds(1);
         _canvas.SetActive(false);
-        SceneManager.LoadScene(LevelIndex);
+        SceneManager.LoadScene(levelName);
     }
 
     private IEnumerator FinishedLoadLevel()
