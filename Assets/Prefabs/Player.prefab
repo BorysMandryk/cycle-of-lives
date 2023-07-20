@@ -131,7 +131,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -150,7 +150,7 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: e6c6ec668c47cfd47995d48ef9f2fe1e, type: 2}
   _speed: 10
   _acceleration: 8
-  _decceleration: 7
+  _decceleration: 8
   _frictionAmount: 0.2
   _jumpForce: 5
   _jumpableLayer:
