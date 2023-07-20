@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        //ApplyFriction();
+        ApplyFriction();
     }
 
     private void HandleMove(float moveDir)
@@ -63,15 +63,15 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.AddForce(movement * Vector2.right);
     }
 
-    //private void ApplyFriction()
-    //{
-    //    if (_moveDir < 0.01f)
-    //    {
-    //        float amount = Mathf.Min(Mathf.Abs(_rigidbody.velocity.x), Mathf.Abs(_frictionAmount));
-    //        amount *= Mathf.Sign(_rigidbody.velocity.x);
-    //        _rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
-    //    }
-    //}
+    private void ApplyFriction()
+    {
+        if (Mathf.Abs(_moveDir) < 0.01f)
+        {
+            float amount = Mathf.Min(Mathf.Abs(_rigidbody.velocity.x), Mathf.Abs(_frictionAmount));
+            amount *= Mathf.Sign(_rigidbody.velocity.x);
+            _rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+        }
+    }
 
     //private void Move()
     //{
