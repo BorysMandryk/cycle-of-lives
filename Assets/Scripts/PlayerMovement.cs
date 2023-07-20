@@ -17,8 +17,15 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _frictionAmount = 0.2f;
 
-    [SerializeField] private float _jumpForce = 5f;
+    [Header("Jump Config")]
+    [Space]
+
+    [SerializeField] private float _jumpHeight = 3f;
+    [SerializeField] private float _gravityScale = 3f;
+    [SerializeField] private float _gravityFallScale = 5f;
+
     [SerializeField] private LayerMask _jumpableLayer;
+    //[SerializeField] private float _jumpForce = 5f;
 
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
@@ -38,6 +45,18 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputReader.MoveEvent -= HandleMove;
         _inputReader.JumpEvent -= Jump;
+    }
+
+    private void Update()
+    {
+        if (_rigidbody.velocity.y > 0)
+        {
+            _rigidbody.gravityScale = _gravityScale;
+        }
+        else
+        {
+            _rigidbody.gravityScale = _gravityFallScale;
+        }
     }
 
     private void FixedUpdate()
@@ -73,22 +92,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //private void Move()
-    //{
-    //    Vector2 moveVelocity = new Vector2(_speed * _moveDir, _rigidbody.velocity.y);
-    //    _rigidbody.velocity = moveVelocity;
-    //}
-
     private void Jump()
     {
         if (IsGrounded())
         {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-
-            Vector2 jumpVec = Vector2.up * _jumpForce;
-            _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+            _rigidbody.gravityScale = _gravityScale;
+            float jumpForce = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _rigidbody.gravityScale) * -2) * _rigidbody.mass;
+            _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+
+    //private void Jump()
+    //{
+    //    if (IsGrounded())
+    //    {
+    //        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+
+    //        Vector2 jumpVec = Vector2.up * _jumpForce;
+    //        _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+    //    }
+    //}
 
     private bool IsGrounded()
     {
