@@ -12,6 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Config")]
     [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _acceleration = 5f;
+    [SerializeField] private float _decceleration = 5f;
+
+    [SerializeField] private float _frictionAmount = 0.2f;
+
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private LayerMask _jumpableLayer;
 
@@ -38,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        ApplyFriction();
     }
 
     private void HandleMove(float moveDir)
@@ -47,9 +53,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector2 moveVelocity = new Vector2(_speed * _moveDir, _rigidbody.velocity.y);
-        _rigidbody.velocity = moveVelocity;
+        float targetSpeed = _moveDir * _speed;
+        float speedDif = targetSpeed - _rigidbody.velocity.x;
+        Debug.Log(speedDif);
+
+        float accelRate = (Mathf.Abs(targetSpeed) > Mathf.Epsilon) ? _acceleration : _decceleration;
+        float movement = Mathf.Abs(speedDif) * accelRate * Mathf.Sign(speedDif);
+
+        _rigidbody.AddForce(movement * Vector2.right);
     }
+
+    //private void ApplyFriction()
+    //{
+    //    if (_moveDir < 0.01f)
+    //    {
+    //        float amount = Mathf.Min(Mathf.Abs(_rigidbody.velocity.x), Mathf.Abs(_frictionAmount));
+    //        amount *= Mathf.Sign(_rigidbody.velocity.x);
+    //        _rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+    //    }
+    //}
+
+    //private void Move()
+    //{
+    //    Vector2 moveVelocity = new Vector2(_speed * _moveDir, _rigidbody.velocity.y);
+    //    _rigidbody.velocity = moveVelocity;
+    //}
 
     private void Jump()
     {
