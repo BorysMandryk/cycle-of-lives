@@ -12,8 +12,20 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Config")]
     [SerializeField] private float _speed = 10f;
-    [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private float _acceleration = 5f;
+    [SerializeField] private float _decceleration = 5f;
+
+    [SerializeField] private float _frictionAmount = 0.2f;
+
+    [Header("Jump Config")]
+    [Space]
+
+    [SerializeField] private float _jumpHeight = 3f;
+    [SerializeField] private float _gravityScale = 3f;
+    [SerializeField] private float _gravityFallScale = 5f;
+
     [SerializeField] private LayerMask _jumpableLayer;
+    //[SerializeField] private float _jumpForce = 5f;
 
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
@@ -35,9 +47,22 @@ public class PlayerMovement : MonoBehaviour
         _inputReader.JumpEvent -= Jump;
     }
 
+    private void Update()
+    {
+        if (_rigidbody.velocity.y > 0)
+        {
+            _rigidbody.gravityScale = _gravityScale;
+        }
+        else if (_rigidbody.velocity.y < -Mathf.Epsilon)
+        {
+            _rigidbody.gravityScale = _gravityFallScale;
+        }
+    }
+
     private void FixedUpdate()
     {
         Move();
+        ApplyFriction();
     }
 
     private void HandleMove(float moveDir)
@@ -47,20 +72,46 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector2 moveVelocity = new Vector2(_speed * _moveDir, _rigidbody.velocity.y);
-        _rigidbody.velocity = moveVelocity;
+        float targetSpeed = _moveDir * _speed;
+        float speedDif = targetSpeed - _rigidbody.velocity.x;
+        Debug.Log(speedDif);
+
+        float accelRate = (Mathf.Abs(targetSpeed) > Mathf.Epsilon) ? _acceleration : _decceleration;
+        float movement = Mathf.Abs(speedDif) * accelRate * Mathf.Sign(speedDif);
+
+        _rigidbody.AddForce(movement * Vector2.right);
+    }
+
+    private void ApplyFriction()
+    {
+        if (Mathf.Abs(_moveDir) < 0.01f)
+        {
+            float amount = Mathf.Min(Mathf.Abs(_rigidbody.velocity.x), Mathf.Abs(_frictionAmount));
+            amount *= Mathf.Sign(_rigidbody.velocity.x);
+            _rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+        }
     }
 
     private void Jump()
     {
         if (IsGrounded())
         {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
-
-            Vector2 jumpVec = Vector2.up * _jumpForce;
-            _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+            _rigidbody.gravityScale = _gravityScale;
+            float jumpForce = Utils.HeightToForce(_jumpHeight, _rigidbody);
+            _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+
+    //private void Jump()
+    //{
+    //    if (IsGrounded())
+    //    {
+    //        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0f);
+
+    //        Vector2 jumpVec = Vector2.up * _jumpForce;
+    //        _rigidbody.AddForce(jumpVec, ForceMode2D.Impulse);
+    //    }
+    //}
 
     private bool IsGrounded()
     {
