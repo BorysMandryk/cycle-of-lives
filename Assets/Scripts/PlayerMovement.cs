@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded())
         {
             _rigidbody.gravityScale = _gravityScale;
-            float jumpForce = Mathf.Sqrt(_jumpHeight * (Physics2D.gravity.y * _rigidbody.gravityScale) * -2) * _rigidbody.mass;
+            float jumpForce = Utils.HeightToForce(_jumpHeight, _rigidbody);
             _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
