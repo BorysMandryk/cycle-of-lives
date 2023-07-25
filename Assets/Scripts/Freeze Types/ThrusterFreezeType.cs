@@ -2,7 +2,7 @@
 
 public class ThrusterFreezeType : FreezeType
 {
-    [SerializeField] private float _thrustForce;
+    [SerializeField] private float _height = 4.5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,6 +13,14 @@ public class ThrusterFreezeType : FreezeType
             return;
         }
         rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(Vector2.up * _thrustForce, ForceMode2D.Impulse);
+
+        // Якщо позиція об'єкта не збігається з центром колайдера
+        //Vector2 thrusterCenter = GetComponent<Collider2D>().bounds.center;
+        //Vector2 colliderCenter = collision.GetComponent<Collider2D>().bounds.center;
+        //float distanceToObjectCenterY = thrusterCenter.y - colliderCenter.y;
+
+        float distanceToObjectCenterY = transform.position.y - collision.transform.position.y;
+        float force = Utils.HeightToForce(_height + distanceToObjectCenterY, rigidbody);
+        rigidbody.AddForce(Vector2.up * force, ForceMode2D.Impulse);
     }
 }
