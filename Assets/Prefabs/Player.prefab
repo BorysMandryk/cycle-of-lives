@@ -148,11 +148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: e6c6ec668c47cfd47995d48ef9f2fe1e, type: 2}
-  _speed: 10
-  _acceleration: 8
+  _speed: 12
+  _acceleration: 10
   _decceleration: 8
   _frictionAmount: 0.2
-  _jumpForce: 5
+  _jumpHeight: 1.5
+  _gravityScale: 3
+  _gravityFallScale: 4
   _jumpableLayer:
     serializedVersion: 2
     m_Bits: 128

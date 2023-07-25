@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidbody.gravityScale = _gravityScale;
         }
-        else
+        else if (_rigidbody.velocity.y < -Mathf.Epsilon)
         {
             _rigidbody.gravityScale = _gravityFallScale;
         }
