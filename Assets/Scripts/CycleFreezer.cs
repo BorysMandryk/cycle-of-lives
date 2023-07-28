@@ -14,6 +14,10 @@ public class CycleFreezer : MonoBehaviour
     private void Awake()
     {
         _freezeTypeSelector = FindObjectOfType<FreezeTypeSelector>();
+    }
+
+    private void OnEnable()
+    {
         _inputReader.FreezeEvent += Freeze;
     }
 
@@ -22,8 +26,19 @@ public class CycleFreezer : MonoBehaviour
         _inputReader.FreezeEvent -= Freeze;
     }
 
-    // “ут маЇтьс€ на уваз≥, що все це знаходитьс€ на об'Їкт≥ гравц€
     private void Freeze()
+    {
+        CreateFreezeObject();
+        DestroyOnFreeze();
+    }
+
+    private void DestroyOnFreeze()
+    {
+        Destroy(gameObject);
+        GameManager.Instance.SpawnPlayer();
+    }
+
+    private void CreateFreezeObject()
     {
         Vector2 freezePos = Utils.SnapToGrid(GameManager.Instance.Grid, transform.position);
 
@@ -32,8 +47,5 @@ public class CycleFreezer : MonoBehaviour
         instance.GetComponent<FreezeType>().Freeze();
 
         GameManager.Instance.FreezeTracker.AddFreeze(instance);
-
-        GameManager.Instance.SpawnPlayer();
-        Destroy(gameObject);
     }
 }

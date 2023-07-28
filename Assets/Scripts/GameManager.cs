@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator _transition;
     private Transform _checkpoint;
 
+    private GameObject _currentPlayer;
+    private Animator _playerAnimator;
+
     public bool GameStarted { get; set; } = false;
 
     public Grid Grid { get; private set; }
@@ -28,8 +31,6 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        SpawnPlayer();
     }
 
     private void OnEnable()
@@ -54,7 +55,9 @@ public class GameManager : MonoBehaviour
             spawnPos = _defaultSpawnPos;
         }
 
-        Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
+        _currentPlayer = Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
+        _playerAnimator = _currentPlayer.GetComponent<Animator>();
+        _playerAnimator.SetTrigger("PlayerCreation");
     }
 
     public void SetCheckpoint(Transform newCheckpoint)

@@ -36,7 +36,10 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+    }
 
+    private void OnEnable()
+    {
         _inputReader.MoveEvent += HandleMove;
         _inputReader.JumpEvent += Jump;
     }
@@ -49,13 +52,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_rigidbody.velocity.y > 0)
-        {
-            _rigidbody.gravityScale = _gravityScale;
-        }
-        else if (_rigidbody.velocity.y < -Mathf.Epsilon)
+        if (_rigidbody.velocity.y < -0.01)
         {
             _rigidbody.gravityScale = _gravityFallScale;
+        }
+        else
+        {
+            _rigidbody.gravityScale = _gravityScale;
         }
     }
 
