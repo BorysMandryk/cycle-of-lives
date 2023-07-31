@@ -23,14 +23,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpHeight = 3f;
     [SerializeField] private float _gravityScale = 3f;
     [SerializeField] private float _gravityFallScale = 5f;
-
     [SerializeField] private LayerMask _jumpableLayer;
-    //[SerializeField] private float _jumpForce = 5f;
+
+    [Header("Particles")]
+    [Space]
+    [SerializeField] private ParticleSystem _movePS;
+    [SerializeField] private ParticleSystem _landPS;
 
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
 
     private float _moveDir;
+    private bool _groundedPrevFrame = true;
 
     private void Awake()
     {
@@ -52,18 +56,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_rigidbody.velocity.y < -0.01)
-        {
-            _rigidbody.gravityScale = _gravityFallScale;
-        }
-        else
-        {
-            _rigidbody.gravityScale = _gravityScale;
-        }
+        Face();
+        Land();
     }
 
     private void FixedUpdate()
     {
+        ApplyGravity();
         Move();
         ApplyFriction();
     }
@@ -73,16 +72,40 @@ public class PlayerMovement : MonoBehaviour
         _moveDir = moveDir;
     }
 
+    private void Face()
+    {
+        if (_moveDir == 0)
+        {
+            return;
+        }
+
+        Vector3 playerScale = transform.localScale;
+        playerScale.x = _moveDir;
+        transform.localScale = playerScale;
+    }
+
     private void Move()
     {
+        MoveParticles();
         float targetSpeed = _moveDir * _speed;
         float speedDif = targetSpeed - _rigidbody.velocity.x;
-        Debug.Log(speedDif);
 
         float accelRate = (Mathf.Abs(targetSpeed) > Mathf.Epsilon) ? _acceleration : _decceleration;
         float movement = Mathf.Abs(speedDif) * accelRate * Mathf.Sign(speedDif);
 
         _rigidbody.AddForce(movement * Vector2.right);
+    }
+
+    private void MoveParticles()
+    {
+        if (_moveDir != 0 && IsGrounded())
+        {
+            _movePS.Play();
+        }
+        else
+        {
+            _movePS.Stop();
+        }
     }
 
     private void ApplyFriction()
@@ -92,6 +115,18 @@ public class PlayerMovement : MonoBehaviour
             float amount = Mathf.Min(Mathf.Abs(_rigidbody.velocity.x), Mathf.Abs(_frictionAmount));
             amount *= Mathf.Sign(_rigidbody.velocity.x);
             _rigidbody.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        if (_rigidbody.velocity.y < -0.01)
+        {
+            _rigidbody.gravityScale = _gravityFallScale;
+        }
+        else
+        {
+            _rigidbody.gravityScale = _gravityScale;
         }
     }
 
@@ -128,5 +163,14 @@ public class PlayerMovement : MonoBehaviour
         float vecAngle = Vector2.Angle(hitInfo.normal, Vector2.up);
 
         return vecAngle < 1;
+    }
+
+    private void Land()
+    {
+        if (!_groundedPrevFrame && IsGrounded())
+        {
+            _landPS.Play();
+        }
+        _groundedPrevFrame = IsGrounded();
     }
 }

@@ -13,7 +13,7 @@ TagManager:
   - UI
   - PostProcessing
   - Jumpable
-  - 
+  - Player
   - 
   - 
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2903179325
+    locked: 0
+  - name: Particles
+    uniqueID: 3173256527
     locked: 0
