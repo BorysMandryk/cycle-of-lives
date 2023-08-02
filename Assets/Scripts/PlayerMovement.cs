@@ -30,8 +30,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ParticleSystem _movePS;
     [SerializeField] private ParticleSystem _landPS;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip _jumpSFX;
+
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
+    private AudioSource _audioSource;
 
     private float _moveDir;
     private bool _groundedPrevFrame = true;
@@ -40,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -137,6 +142,8 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.gravityScale = _gravityScale;
             float jumpForce = Utils.HeightToForce(_jumpHeight, _rigidbody);
             _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            _audioSource.PlayOneShot(_jumpSFX);
         }
     }
 
