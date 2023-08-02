@@ -25,10 +25,10 @@ public class LevelLoader : MonoBehaviour
         // Варіант 1
         // Проблема цього методу в тому, що він зберігає інформацію між сесіями,
         // що в цій грі не потрібно
-        PlayerPrefs.SetString("LastExitName", _exitName);
+        //PlayerPrefs.SetString("LastExitName", _exitName);
 
         // Варіант 2
-        //GameManager.Instance.LastExitName = _exitName;
+        GameManager.Instance.LastExitName = _exitName;
 
         //GameManager.Instance.LoadNextLevel(_nextLevelIndex);
         GameManager.Instance.LoadNextLevel(_nextSceneName);

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public FreezeTracker FreezeTracker { get; private set; }
 
     public static GameManager Instance { get; private set; }
+    public string LastExitName { get; set; }
 
     private void Awake()
     {
