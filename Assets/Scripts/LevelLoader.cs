@@ -16,14 +16,19 @@ public class LevelLoader : MonoBehaviour
         {
             return;
         }
-
         _triggered = true;
 
+        Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
+
         // Варіант 1
-        PlayerPrefs.SetString("LastExitName", _exitName);
+        // Проблема цього методу в тому, що він зберігає інформацію між сесіями,
+        // що в цій грі не потрібно
+        //PlayerPrefs.SetString("LastExitName", _exitName);
 
         // Варіант 2
-        //GameManager.Instance.LastExitName = _exitName;
+        GameManager.Instance.LastExitName = _exitName;
 
         //GameManager.Instance.LoadNextLevel(_nextLevelIndex);
         GameManager.Instance.LoadNextLevel(_nextSceneName);

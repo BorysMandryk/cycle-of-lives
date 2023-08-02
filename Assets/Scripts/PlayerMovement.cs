@@ -23,20 +23,32 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpHeight = 3f;
     [SerializeField] private float _gravityScale = 3f;
     [SerializeField] private float _gravityFallScale = 5f;
-
     [SerializeField] private LayerMask _jumpableLayer;
-    //[SerializeField] private float _jumpForce = 5f;
+
+    [Header("Particles")]
+    [Space]
+    [SerializeField] private ParticleSystem _movePS;
+    [SerializeField] private ParticleSystem _landPS;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip _jumpSFX;
 
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
+    private AudioSource _audioSource;
 
     private float _moveDir;
+    private bool _groundedPrevFrame = true;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _audioSource = GetComponent<AudioSource>();
+    }
 
+    private void OnEnable()
+    {
         _inputReader.MoveEvent += HandleMove;
         _inputReader.JumpEvent += Jump;
     }
@@ -49,18 +61,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_rigidbody.velocity.y > 0)
-        {
-            _rigidbody.gravityScale = _gravityScale;
-        }
-        else if (_rigidbody.velocity.y < -Mathf.Epsilon)
-        {
-            _rigidbody.gravityScale = _gravityFallScale;
-        }
+        Face();
+        Land();
     }
 
     private void FixedUpdate()
     {
+        ApplyGravity();
         Move();
         ApplyFriction();
     }
@@ -70,16 +77,40 @@ public class PlayerMovement : MonoBehaviour
         _moveDir = moveDir;
     }
 
+    private void Face()
+    {
+        if (_moveDir == 0)
+        {
+            return;
+        }
+
+        Vector3 playerScale = transform.localScale;
+        playerScale.x = _moveDir;
+        transform.localScale = playerScale;
+    }
+
     private void Move()
     {
+        MoveParticles();
         float targetSpeed = _moveDir * _speed;
         float speedDif = targetSpeed - _rigidbody.velocity.x;
-        Debug.Log(speedDif);
 
         float accelRate = (Mathf.Abs(targetSpeed) > Mathf.Epsilon) ? _acceleration : _decceleration;
         float movement = Mathf.Abs(speedDif) * accelRate * Mathf.Sign(speedDif);
 
         _rigidbody.AddForce(movement * Vector2.right);
+    }
+
+    private void MoveParticles()
+    {
+        if (_moveDir != 0 && IsGrounded())
+        {
+            _movePS.Play();
+        }
+        else
+        {
+            _movePS.Stop();
+        }
     }
 
     private void ApplyFriction()
@@ -92,6 +123,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void ApplyGravity()
+    {
+        if (_rigidbody.velocity.y < -0.01)
+        {
+            _rigidbody.gravityScale = _gravityFallScale;
+        }
+        else
+        {
+            _rigidbody.gravityScale = _gravityScale;
+        }
+    }
+
     private void Jump()
     {
         if (IsGrounded())
@@ -99,6 +142,8 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.gravityScale = _gravityScale;
             float jumpForce = Utils.HeightToForce(_jumpHeight, _rigidbody);
             _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            _audioSource.PlayOneShot(_jumpSFX);
         }
     }
 
@@ -125,5 +170,14 @@ public class PlayerMovement : MonoBehaviour
         float vecAngle = Vector2.Angle(hitInfo.normal, Vector2.up);
 
         return vecAngle < 1;
+    }
+
+    private void Land()
+    {
+        if (!_groundedPrevFrame && IsGrounded())
+        {
+            _landPS.Play();
+        }
+        _groundedPrevFrame = IsGrounded();
     }
 }

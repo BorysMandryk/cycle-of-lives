@@ -81,6 +81,8 @@ public class StartGame : MonoBehaviour
         {
             InputReader.PauseMenuEvent += OnOpenButtonClick;
             InputReader.ReturnEvent += OnCloseButtonClick;
+
+            GameManager.Instance.SpawnPlayer();
         }
 
         GameManager.Instance.GameStarted = true;
